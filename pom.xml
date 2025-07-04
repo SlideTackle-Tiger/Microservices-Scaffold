@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.tiger</groupId>
+    <artifactId>scaffold</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <!-- 项目相关信息 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- 配置镜像源-->
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- 添加子模块-->
+    <modules>
+        <module>clintOne</module>
+        <module>clientTwo</module>
+        <module>feign-api</module>
+        <module>common</module>
+        <module>gateway</module>
+    </modules>
+
+    <!--Spring依赖-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.9.RELEASE</version>
+        <relativePath/>
+    </parent>
+    <dependencyManagement>
+        <dependencies>
+            <!--nacos的管理依赖-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.2.5.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!--测试依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- mybatis-plus依赖-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.12</version>
+        </dependency>
+        <!-- mysql驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.47</version>
+        </dependency>
+
+        <!-- lombok依赖-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.18.36</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <!--多环境配置-->
+    <profiles>
+        <!-- 可以在右侧maven中选择配置文件，根据配置文件的不同使用不同的端口-->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <!-- 端口配置 -->
+                <clintOne.service.port>1236</clintOne.service.port>
+                <clintTwo.service.port>1235</clintTwo.service.port>
+                <gateway.port>1237</gateway.port>
+                <!-- nacos命名空间配置 -->
+                <!-- tiger命名空间-->
+                <namespace>2ffe96d7-1e52-40b1-a133-36ba648157d9</namespace>
+                <!-- nacos配置文件地址-->
+                <profile.active>dev</profile.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <clintOne.service.port>2234</clintOne.service.port>
+                <clintTwo.service.port>2235</clintTwo.service.port>
+                <gateway.port>2236</gateway.port>
+                <!-- nacos命名空间配置 -->
+                <!-- tiger命名空间-->
+                <namespace>2ffe96d7-1e52-40b1-a133-36ba648157d9</namespace>
+                <!-- nacos配置文件地址-->
+                <profile.active>test</profile.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <clintOne.service.port>3234</clintOne.service.port>
+                <clintTwo.service.port>3235</clintTwo.service.port>
+                <gateway.port>3236</gateway.port>
+                <!-- nacos命名空间配置 -->
+                <!-- tiger命名空间-->
+                <namespace>2ffe96d7-1e52-40b1-a133-36ba648157d9</namespace>
+                <!-- nacos配置文件地址-->
+                <profile.active>prod</profile.active>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <resources>
+            <!--允许src/main/resources下配置文件读取pom中配置-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+
+</project>

@@ -1,0 +1,26 @@
+server:
+  port: 1237
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        namespace: 2ffe96d7-1e52-40b1-a133-36ba648157d9
+    gateway:
+      routes:
+        - id: user-service
+          uri:
+            lb://user-service
+          predicates:
+            - name: Path
+              args:
+                _genkey_0: /user/**
+        - id: order-service
+          uri:
+            lb://order-service
+          predicates:
+            - name: Path
+              args:
+                _genkey_0: /order/**

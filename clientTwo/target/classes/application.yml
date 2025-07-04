@@ -1,0 +1,33 @@
+server:
+  port: 1235
+Spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_order?useSSL=false
+    username: root
+    password: MYSQLroot
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        cluster-name: HZ # 集群名称
+        namespace: 2ffe96d7-1e52-40b1-a133-36ba648157d9 # 命名空间
+  application:
+    name: order-service
+user-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule # 负载均衡策略
+ribbon:
+  eager-load:
+    enabled: true # 开启饥饿加载
+    clients: user-service # 指定饥饿加载服务名称
+mybatis-plus:
+  type-aliases-package: org.tiger.clinttwo.bean.po
+  configuration:
+    map-underscore-to-camel-case: true
+# feign 配置
+feign:
+  httpclient:
+    enabled: true # 开启feign httpclient支持
+    max-connections: 100 # 最大连接数
+    max-connections-per-route: 10 # 每个路由最大连接数

@@ -1,0 +1,15 @@
+# bootstrap.yml优于application.yml，会优先使用这里的配置
+spring:
+  application:
+    name: user-service
+  profiles:
+    active: @profile.active@
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        cluster-name: HZ
+        namespace: @namespace@
+      config:
+        file-extension: yaml
+        namespace: @namespace@

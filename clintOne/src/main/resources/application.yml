@@ -1,0 +1,12 @@
+server:
+  port: @clintOne.service.port@
+Spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_user?useSSL=false
+    username: root
+    password: MYSQLroot
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis-plus:
+  type-aliases-package: org.tiger.clintone.bean.po
+  configuration:
+    map-underscore-to-camel-case: true
