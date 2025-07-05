@@ -22,5 +22,4 @@ public class OrderPO {
     private Integer buyerId;
     private Integer amount;
     private String getLocation;
-    getLocation.e
 }
